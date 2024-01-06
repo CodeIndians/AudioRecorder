@@ -3,7 +3,6 @@
 
 using AudioRecorder;
 using System.Runtime.InteropServices;
-using System.Text;
 
 void appFunction()
 {
@@ -22,12 +21,13 @@ void appFunction()
     //TODO: skipping event registers for now 
 
     //TODO:  sending 0 for now 
-
+    Console.WriteLine("Start Recording");
     recorder.StartRecording(0);
 
     // sleep for 3 seconds
-    Thread.Sleep(3000);
+    Thread.Sleep(500);
 
+    Console.WriteLine("Stop Recording");
     recorder.StopRecording();
 
 }
