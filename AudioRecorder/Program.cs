@@ -1,2 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+
+using AudioRecorder;
+
+void appFunction()
+{
+    var record = new Record();
+    record.
+}
+
+
+appFunction();
