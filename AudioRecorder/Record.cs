@@ -32,6 +32,8 @@ namespace AudioRecorder
         byte[] FMT = { 0x66, 0x6d, 0x74, 0x20 };
         byte[] DATA = { 0x64, 0x61, 0x74, 0x61 };
 
+        private string startupPath = @"C:\tmp\";
+
         //private System.Windows.Forms.Timer timer1;
         private RecordStoppingStruct stopstruct = new RecordStoppingStruct();
         private const int NUMBER_OF_HEADERS = 4;
@@ -236,11 +238,11 @@ namespace AudioRecorder
             //hWaveIn = IntPtr.Zero;
 
             // create a binary file to hold the recorded data
-            if (!Directory.Exists(Application.StartupPath + @"\Safe"))
-                Directory.CreateDirectory(Application.StartupPath + @"\Safe");
-            if (File.Exists(Application.StartupPath + @"\Safe\TheData.bin"))
-                File.Delete(Application.StartupPath + @"\Safe\TheData.bin");
-            fs = new FileStream(Application.StartupPath + @"\Safe\TheData.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            if (!Directory.Exists(startupPath + @"\Safe"))
+                Directory.CreateDirectory(startupPath + @"\Safe");
+            if (File.Exists(startupPath + @"\Safe\TheData.bin"))
+                File.Delete(startupPath + @"\Safe\TheData.bin");
+            fs = new FileStream(startupPath + @"\Safe\TheData.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             bw = new BinaryWriter(fs);
 
             Int32 riffsize = 0, datasize = 0;
@@ -341,9 +343,9 @@ namespace AudioRecorder
                 int riffsize, datasize, datasize1;
                 long filesize;
                 byte[] databytes = new byte[databytessize];
-                BinaryReader br = new BinaryReader(File.Open(Application.StartupPath + "\\Safe\\TheData.bin", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-                BinaryWriter wavwriter = new BinaryWriter(File.Open(Application.StartupPath + "\\Safe\\TheData.wav", FileMode.Create, FileAccess.Write, FileShare.Read));
-                FileInfo fi = new FileInfo(Application.StartupPath + "\\Safe\\TheData.bin");
+                BinaryReader br = new BinaryReader(File.Open(startupPath + "\\Safe\\TheData.bin", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                BinaryWriter wavwriter = new BinaryWriter(File.Open(startupPath + "\\Safe\\TheData.wav", FileMode.Create, FileAccess.Write, FileShare.Read));
+                FileInfo fi = new FileInfo(startupPath + "\\Safe\\TheData.bin");
                 filesize = fi.Length;//ok
                 riffsize = (int)filesize - 8;//ok
 
@@ -404,7 +406,8 @@ namespace AudioRecorder
             stopstruct.Stopping = true;// let the waveinhandler know to stop adding buffers back to the queque
             while (!stopstruct.Stopped)
             {
-                Application.DoEvents();
+                // TODO : Skipping this for now 
+                //Application.DoEvents();
             }
             rv = FixBinFile();// turn the binary file into a legit .wav file
             return rv;
@@ -568,7 +571,7 @@ namespace AudioRecorder
                 }
                 if (stopstruct.Stopped)
                 {
-                    timer1.Enabled = false;
+                    //timer1.Enabled = false;
                     Stop();// close the waveindevice
                     RaiseRecordingStoppedEvent();
                 }
@@ -576,5 +579,4 @@ namespace AudioRecorder
             }
         }
     }
-}
 }
