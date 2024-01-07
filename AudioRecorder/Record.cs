@@ -404,11 +404,7 @@ namespace AudioRecorder
             bool rv = true;
             stopstruct.NumberofStoppedBuffers = 0;
             stopstruct.Stopping = true;// let the waveinhandler know to stop adding buffers back to the queque
-            while (!stopstruct.Stopped)
-            {
-                // TODO : Skipping this for now 
-                //Application.DoEvents();
-            }
+           
             rv = FixBinFile();// turn the binary file into a legit .wav file
             return rv;
         }

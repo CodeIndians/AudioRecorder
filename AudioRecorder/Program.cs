@@ -25,7 +25,7 @@ void appFunction()
     recorder.StartRecording(0);
 
     // sleep for 3 seconds
-    Thread.Sleep(500);
+    Thread.Sleep(5000);
 
     Console.WriteLine("Stop Recording");
     recorder.StopRecording();
